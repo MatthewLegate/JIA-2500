@@ -1,6 +1,7 @@
 import * as React from 'react';
-import GetInLineTitle from './GetInLineTitle'
+import GetInLineTitle from './components/GetInLineTitle'
 import styled from "styled-components";
+import { useNavigate } from 'react-router-dom';
 
 const Main = styled("div")`
   font-family: sans-serif;
@@ -9,6 +10,8 @@ const Main = styled("div")`
 `;
 
 export default function User() {
+    let navigate = useNavigate();
+
     const options = [
         { label: 'Event 1', value: 'Event 1' },
         { label: 'Event 2', value: 'Event 2' },
@@ -43,7 +46,10 @@ export default function User() {
             <p></p>
             <button >View Your Queries</button> 
             <button >Settings</button> 
-            <button >Log Out</button> 
+            <button onClick={() => {
+                navigate('/login');
+                }}>Log Out
+            </button> 
         </Main>
         
     );
