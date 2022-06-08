@@ -1,7 +1,7 @@
 import * as React from 'react';
-import GetInLineTitle from './components/GetInLineTitle'
+import GetInLineTitle from '../components/GetInLineTitle'
 import styled from "styled-components";
-import LogoutButton from './components/LogoutButton';
+import LogoutButton from '../components/LogoutButton';
 
 const Main = styled("div")`
   font-family: sans-serif;
