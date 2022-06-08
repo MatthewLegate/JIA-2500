@@ -1,8 +1,8 @@
 import * as React from 'react';
 // import { Button } from 'react-native';
 // import { useNavigation } from '@react-navigation/native';
-import GetInLineTitle from './components/GetInLineTitle';
-import LogoutButton from './components/LogoutButton';
+import GetInLineTitle from '../components/GetInLineTitle';
+import LogoutButton from '../components/LogoutButton';
 
 
 // const navigate = useNavigate();

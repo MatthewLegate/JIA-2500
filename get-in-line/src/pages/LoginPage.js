@@ -1,5 +1,5 @@
 import React from 'react'
-import GetInLineTitle from './GetInLineTitle'
+import GetInLineTitle from '../components/GetInLineTitle'
 import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {

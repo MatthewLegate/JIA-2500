@@ -1,9 +1,9 @@
 import React from 'react';
 
 import {BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import AdminPage from './AdminPage';
-import LoginPage from './components/LoginPage';
-import User from './User';
+import AdminPage from './pages/AdminPage';
+import LoginPage from './pages/LoginPage';
+import User from './pages/UserPage';
 
 function App() {
   return (
