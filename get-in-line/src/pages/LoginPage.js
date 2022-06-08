@@ -10,8 +10,8 @@ export default function LoginPage() {
     <>
     <div>
       <GetInLineTitle/>
-      Username <input type="text" /> <br/>
-      Password <input type="text" /> <br/>
+      Username <input type="text" name="username"/> <br/>
+      Password <input type="password" name="password"/> <br/>
       
       <button 
         onClick={() => {
