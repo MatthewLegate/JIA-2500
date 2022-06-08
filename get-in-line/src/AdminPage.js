@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { Button } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+// import { Button } from 'react-native';
+// import { useNavigation } from '@react-navigation/native';
 import GetInLineTitle from './GetInLineTitle';
 
 
-const navigate = useNavigate();
+// const navigate = useNavigate();
 
 function goToTable() {
     alert('taking you to queues');
-    navigate('/about')  
+//    navigate('/about')  
 }
 
 export default function AdminPage() {
