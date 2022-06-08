@@ -1,7 +1,7 @@
 import * as React from 'react';
-import GetInLineTitle from './components/GetInLineTitle'
+import GetInLineTitle from '../components/GetInLineTitle'
 import styled from "styled-components";
-import { useNavigate } from 'react-router-dom';
+import LogoutButton from '../components/LogoutButton';
 
 const Main = styled("div")`
   font-family: sans-serif;
@@ -10,7 +10,6 @@ const Main = styled("div")`
 `;
 
 export default function User() {
-    let navigate = useNavigate();
 
     const options = [
         { label: 'Event 1', value: 'Event 1' },
@@ -46,10 +45,7 @@ export default function User() {
             <p></p>
             <button >View Your Queries</button> 
             <button >Settings</button> 
-            <button onClick={() => {
-                navigate('/login');
-                }}>Log Out
-            </button> 
+            <LogoutButton/>
         </Main>
         
     );
