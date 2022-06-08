@@ -39,11 +39,11 @@ export default function User() {
             <p></p>
             <h2>{value}</h2>
             <p>Distance from you: </p>
-            <p>Current number of people in line : </p>
+            <p>Current number of people in line: </p>
             <p>Estimated waiting time:</p>
             <button >Get In Line!</button> 
             <p></p>
-            <button >View Your Queries</button> 
+            <button >View Your Queues</button> 
             <button >Settings</button> 
             <LogoutButton/>
         </Main>
