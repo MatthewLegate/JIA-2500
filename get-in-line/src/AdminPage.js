@@ -1,7 +1,8 @@
 import * as React from 'react';
 // import { Button } from 'react-native';
 // import { useNavigation } from '@react-navigation/native';
-import GetInLineTitle from './GetInLineTitle';
+import GetInLineTitle from './components/GetInLineTitle';
+import LogoutButton from './components/LogoutButton';
 
 
 // const navigate = useNavigate();
@@ -21,11 +22,7 @@ export default function AdminPage() {
               <button>
                   Settings
                   </button>
-              <button>
-                  Log Out
-                  </button>
-
-
+              <LogoutButton/>
     </div>
   )
 }
