@@ -26,6 +26,13 @@ export default function LoginPage() {
           }} >
           Admin Login
       </button> 
+
+      <button 
+        onClick={() => {
+          navigate('/create');
+          }} >
+          Create an Account
+      </button> 
     </div>
     </>
   )
