@@ -3,10 +3,10 @@ import GetInLineTitle from '../components/GetInLineTitle';
 import LogoutButton from '../components/LogoutButton';
 import { useNavigate } from 'react-router-dom';
 
-function goToTable() {
-    alert('taking you to queues');
+// function goToTable() {
+//     alert('taking you to queues');
     
-}
+// }
 
 export default function AdminPage() {
   let navigate = useNavigate();
