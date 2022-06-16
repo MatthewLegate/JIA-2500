@@ -1,6 +1,7 @@
 import * as React from 'react';
 import GetInLineTitle from '../components/GetInLineTitle';
 import LogoutButton from '../components/LogoutButton';
+import QRImageData from '../QRImageData'
 import { useNavigate } from 'react-router-dom';
 
 import { db } from '../Firebase';
@@ -42,11 +43,13 @@ export default function AdminPage() {
   function addEvent(eventName, addressInput) {
     const path = 'event/' + eventName;
     const newEvent = doc(db, path);
+    const qrcode = QRImageData.generateQR(path);
     const docData = {
       address: addressInput,
       name: eventName,
       numOfPeople: 0,
-      queue: []
+      queue: [],
+      qr: qrcode
     };
     setDoc(newEvent, docData);
     alert("Adding " + eventName + " to database");
