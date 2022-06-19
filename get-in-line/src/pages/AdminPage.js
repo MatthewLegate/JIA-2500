@@ -2,17 +2,46 @@ import * as React from 'react';
 import GetInLineTitle from '../components/GetInLineTitle';
 import LogoutButton from '../components/LogoutButton';
 import { useNavigate } from 'react-router-dom';
+import Event from '../components/Event';
 
 import { db } from '../Firebase';
-import { collection, doc, getDocs, query, setDoc, limit } from 'firebase/firestore';
+import { collection, doc, getDocs, query, setDoc, limit, onSnapshot, deleteDoc } from 'firebase/firestore';
+import { async } from '@firebase/util';
 
 export default function AdminPage() {
+  const [events, setEvents] = React.useState([]);
+
+  React.useEffect(() => {
+    const q = query(collection(db, "event"));
+    const eventList = onSnapshot(q, (querySnapshot) => {
+      let eventsArray = [];
+      querySnapshot.forEach((doc) => {
+        eventsArray.push({ ...doc.data(), id: doc.id });
+      });
+      setEvents(eventsArray);
+    });
+    return () => eventList();
+  }, []);
+
+  const handleDelete = async (eventName) => {
+    await deleteDoc(doc(db, "event", eventName));
+  };
+
   let navigate = useNavigate();
 
   return (
     <div>
       <GetInLineTitle/>
         <p id='queues'></p>
+        <div className='event_container'>
+          {events.map((event) => (
+            <Event 
+              //key={event.name}
+              event={event}
+              handleDelete={handleDelete}
+            />
+          ))}
+        </div>
         <button onClick={() => showExistingQueues()}>
           View Existing Queues
           </button>
