@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Event from '../components/Event';
 
 import { db } from '../Firebase';
-import { collection, doc, getDocs, query, setDoc, limit, onSnapshot, deleteDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, query, setDoc, limit, onSnapshot, deleteDoc, updateDoc } from 'firebase/firestore';
 import { async } from '@firebase/util';
 
 export default function AdminPage() {
@@ -51,11 +51,104 @@ export default function AdminPage() {
         Event Name* <input type="text" id="eventName"/> <br/>
         Address <input type="text" id="address"/> <br/>
         <button onClick={() => verifyEvent()}> Add Event </button>
+        <p></p>
+        Event Name* <input type="text" id="eventName2"/> <br/>
+        User Name* <input type="text" id="UserName"/> <br/>
+        <button onClick={() => verifyUserAdd()}> Add User </button>
+        <button onClick={() => verifyUserRemove()}> Remove User </button>
     </div>
   )
 
 
-  // ----------------------- Functions -----------------------
+// ----------------------- Functions -----------------------
+  function verifyUserAdd() {
+    var UserName = document.getElementById("UserName").value;
+    var Event = document.getElementById("eventName2").value;
+
+    if (UserName.length === 0) {
+      alert("User Name is Required!")
+      return;
+    } else {
+      addUser(Event, UserName);
+    }
+  }
+
+  function verifyUserRemove() {
+  var UserName = document.getElementById("UserName").value;
+  var Event = document.getElementById("eventName2").value;
+
+    if (UserName.length === 0) {
+      alert("User Name is Required!")
+      return;
+    } else {
+      RemoveUser(Event, UserName);
+    }
+  }
+
+ async function addUser(Event, UserName) {
+    //Initialize event document
+    const path = 'event/' + Event;
+    const event = doc(db, 'event', Event);
+    let queue = [];
+
+    //Query into firebase to read queue from document
+    const queuesQuery = query(
+      collection(db, 'event'),
+      limit(100) // Just to make sure we're not querying more than 100 events. Can be removed if database grows and is needed
+    );
+
+    const querySnapshot = await getDocs(queuesQuery);
+    const allDocs = querySnapshot.forEach((snap) => {
+      if (snap.data().name == Event) {
+        queue = snap.data().queue;
+      }
+    }); 
+
+    //add user to queue
+    queue.push(UserName);
+
+    //update document with new queue and number of people
+    updateDoc(event, {
+      numOfPeople: queue.length,
+      queue: queue
+    });
+
+    alert("Adding " + UserName + " to " + Event);
+  }
+
+  async function RemoveUser(Event, UserName) {
+    //Initialize event document
+    const path = 'event/' + Event;
+    const event = doc(db, 'event', Event);
+    let queue = [];
+
+    //Query into firebase to read queue from document
+    const queuesQuery = query(
+      collection(db, 'event'),
+      limit(100) // Just to make sure we're not querying more than 100 events. Can be removed if database grows and is needed
+    );
+
+    const querySnapshot = await getDocs(queuesQuery);
+    const allDocs = querySnapshot.forEach((snap) => {
+      if (snap.data().name == Event) {
+        queue = snap.data().queue;
+      }
+    }); 
+
+    //remove user from queue
+    queue = queue.filter(function(name) {
+      return name !== UserName
+    })
+
+    //update document with new queue and number of people
+    updateDoc(event, {
+      numOfPeople: queue.length,
+      queue: queue
+    });
+
+    alert("Removing " + UserName + " from " + Event);
+  }
+
   function verifyEvent() {
     var eventName = document.getElementById("eventName").value;
     var address = document.getElementById("address").value;
