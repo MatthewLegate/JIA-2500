@@ -8,7 +8,7 @@ export default function Event({
 
     return (
         <div className="event">
-            <input type="text" value={event.name}/>
+            <input type="text" value={event.name} readOnly={true}/>
             <button className="button-delete"
             onClick={() => handleDelete(event.name)}>
                 DELETE
