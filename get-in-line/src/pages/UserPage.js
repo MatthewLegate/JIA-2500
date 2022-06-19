@@ -15,6 +15,8 @@ export default function User() {
         { label: 'Event 1', value: 'Event 1' },
         { label: 'Event 2', value: 'Event 2' },
         { label: 'Event 3', value: 'Event 3' },
+        { label: 'Event 4', value: 'Event 4' },
+        { label: 'Event 5', value: 'Event 5' },
     ];
 
     const [value, setValue] = React.useState('Event 1');
