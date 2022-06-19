@@ -9,6 +9,10 @@ import { collection, doc, getDocs, query, setDoc, limit, onSnapshot, deleteDoc, 
 import { async } from '@firebase/util';
 
 export default function AdminPage() {
+
+
+
+
   const [events, setEvents] = React.useState([]);
 
   React.useEffect(() => {
@@ -29,6 +33,22 @@ export default function AdminPage() {
 
   let navigate = useNavigate();
 
+  // ----Dropdown code----
+  let options1 = events;
+  let options = []
+  for (let i = 0; i < options1.length; i++) {
+    options[i] = {label: options1[i].name, value: options1[i].name};
+  }
+
+
+  const [value, setValue] = React.useState(options[0]);
+
+  const handleChange = (selected) => {
+      setValue(selected.target.value);
+  };
+
+  let eventName = value
+  // ----Dropdown code----
   return (
     <div>
       <GetInLineTitle/>
@@ -52,7 +72,12 @@ export default function AdminPage() {
         Address <input type="text" id="address"/> <br/>
         <button onClick={() => verifyEvent()}> Add Event </button>
         <p></p>
-        Event Name* <input type="text" id="eventName2"/> <br/>
+        <Dropdown
+                label="Select an Event "
+                options={options}
+                value={value}
+                onChange={handleChange}
+        /> <br/>
         User Name* <input type="text" id="UserName"/> <br/>
         <button onClick={() => verifyUserAdd()}> Add User </button>
         <button onClick={() => verifyUserRemove()}> Remove User </button>
@@ -63,7 +88,7 @@ export default function AdminPage() {
 // ----------------------- Functions -----------------------
   function verifyUserAdd() {
     var UserName = document.getElementById("UserName").value;
-    var Event = document.getElementById("eventName2").value;
+    var Event = eventName;
 
     if (UserName.length === 0) {
       alert("User Name is Required!")
@@ -74,8 +99,9 @@ export default function AdminPage() {
   }
 
   function verifyUserRemove() {
-  var UserName = document.getElementById("UserName").value;
-  var Event = document.getElementById("eventName2").value;
+    var UserName = document.getElementById("UserName").value;
+    var Event = eventName;
+
 
     if (UserName.length === 0) {
       alert("User Name is Required!")
@@ -190,3 +216,17 @@ export default function AdminPage() {
   }
 
 }
+
+//Dropdwon element creation
+const Dropdown = ({ label, value, options, onChange }) => {
+  return (
+      <label>
+      {label}
+      <select value={value} onChange={onChange}>
+          {options.map((option) => (
+          <option value={option.value}>{option.label}</option>
+          ))}
+      </select>
+      </label>
+);
+};
