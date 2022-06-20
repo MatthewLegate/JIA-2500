@@ -40,8 +40,10 @@ export default function AdminPage() {
     options[i] = {label: options1[i].name, value: options1[i].name};
   }
 
-
-  const [value, setValue] = React.useState(options[0]);
+  //add empty string to events list to avoid errors with default state
+  options.unshift('');
+  
+  const [value, setValue] = React.useState('');
 
   const handleChange = (selected) => {
       setValue(selected.target.value);
@@ -93,6 +95,9 @@ export default function AdminPage() {
     if (UserName.length === 0) {
       alert("User Name is Required!")
       return;
+    } else if (Event == '') {
+      alert("Please Select an event")
+      return;
     } else {
       addUser(Event, UserName);
     }
@@ -105,6 +110,9 @@ export default function AdminPage() {
 
     if (UserName.length === 0) {
       alert("User Name is Required!")
+      return;
+    } else if (Event == '') {
+      alert("Please Select an event")
       return;
     } else {
       RemoveUser(Event, UserName);
