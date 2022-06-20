@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-
+import GetInLineTitle from '../components/GetInLineTitle';
 
 
 import { doc, getDoc } from "firebase/firestore";
@@ -22,10 +22,12 @@ function Login() {
       // maybe trigger a loading screen
       return;
     }
-    if (user) navigate("/dashboard");
+    if (user) navigate("/admin");
   }, [user, loading]);
   return (
+
     <div className="login">
+
       <div className="login__container">
         <input
           type="text"

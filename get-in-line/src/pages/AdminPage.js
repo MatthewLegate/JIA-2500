@@ -1,17 +1,40 @@
-import * as React from 'react';
+import React, { useEffect, useState } from "react";
 import GetInLineTitle from '../components/GetInLineTitle';
 import LogoutButton from '../components/LogoutButton';
 import { useNavigate } from 'react-router-dom';
 import Event from '../components/Event';
 
-import { db } from '../Firebase';
-import { collection, doc, getDocs, query, setDoc, limit, onSnapshot, deleteDoc, updateDoc } from 'firebase/firestore';
+import { auth, db, logout } from '../Firebase';
+import { collection, doc, getDocs, query, setDoc, limit, onSnapshot, deleteDoc, updateDoc, where } from 'firebase/firestore';
 import { async } from '@firebase/util';
+
+
+import { useAuthState } from "react-firebase-hooks/auth";
+
 
 export default function AdminPage() {
 
 
-
+  const [user, loading, error] = useAuthState(auth);
+  const [name, setName] = useState("");
+  const navigate = useNavigate();
+  const fetchUserName = async () => {
+      try {
+        const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+        const doc = await getDocs(q);
+        const data = doc.docs[0].data();
+        setName(data.name);
+        
+      } catch (err) {
+        console.error(err);
+        alert("An error occured while fetching user data");
+      }
+    };
+    useEffect(() => {
+      if (loading) return;
+      if (!user) return navigate("/");
+      fetchUserName();
+    }, [user, loading]);
 
   const [events, setEvents] = React.useState([]);
 
@@ -31,7 +54,7 @@ export default function AdminPage() {
     await deleteDoc(doc(db, "event", eventName));
   };
 
-  let navigate = useNavigate();
+
 
   // ----Dropdown code----
   let options1 = events;
@@ -42,7 +65,7 @@ export default function AdminPage() {
 
   //add empty string to events list to avoid errors with default state
   options.unshift('');
-  
+
   const [value, setValue] = React.useState('');
 
   const handleChange = (selected) => {
@@ -57,7 +80,7 @@ export default function AdminPage() {
         <p id='queues'></p>
         <div className='event_container'>
           {events.map((event) => (
-            <Event 
+            <Event
               //key={event.name}
               event={event}
               handleDelete={handleDelete}
@@ -136,7 +159,7 @@ export default function AdminPage() {
       if (snap.data().name == Event) {
         queue = snap.data().queue;
       }
-    }); 
+    });
 
     //add user to queue
     queue.push(UserName);
@@ -167,7 +190,7 @@ export default function AdminPage() {
       if (snap.data().name == Event) {
         queue = snap.data().queue;
       }
-    }); 
+    });
 
     //remove user from queue
     queue = queue.filter(function(name) {
