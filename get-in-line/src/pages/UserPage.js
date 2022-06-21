@@ -2,6 +2,9 @@ import * as React from 'react';
 import GetInLineTitle from '../components/GetInLineTitle'
 import styled from "styled-components";
 import LogoutButton from '../components/LogoutButton';
+import { auth, db, logout } from '../Firebase';
+import { collection, doc, getDocs, query, setDoc, limit, onSnapshot, deleteDoc, updateDoc, where } from 'firebase/firestore';
+import { async } from '@firebase/util';
 
 const Main = styled("div")`
   font-family: sans-serif;
@@ -10,22 +13,35 @@ const Main = styled("div")`
 `;
 
 export default function User() {
+    // ----Dropdown code----
+    const [events, setEvents] = React.useState([]);
+    
+    const q = query(collection(db, "event"));
+    const eventList = onSnapshot(q, (querySnapshot) => {
+      let eventsArray = [];
+      querySnapshot.forEach((doc) => {
+        eventsArray.push({ ...doc.data(), id: doc.id });
+      });
+      setEvents(eventsArray);
+    });
+    
+    let options1 = events;
+    let options = []
+    for (let i = 0; i < options1.length; i++) {
+        options[i] = {label: options1[i].name, value: options1[i].name};
+    }
 
-    const options = [
-        { label: 'Event 1', value: 'Event 1' },
-        { label: 'Event 2', value: 'Event 2' },
-        { label: 'Event 3', value: 'Event 3' },
-        { label: 'Event 4', value: 'Event 4' },
-        { label: 'Event 5', value: 'Event 5' },
-    ];
+    //add empty string to events list to avoid errors with default state
+    options.unshift('');
 
-    const [value, setValue] = React.useState('Event 1');
+    const [value, setValue] = React.useState('');
 
-    const handleChange = (event) => {
-        setValue(event.target.value);
+    const handleChange = (selected) => {
+        setValue(selected.target.value);
     };
 
-    let eventName = <h1>value</h1>
+    let eventName = value;
+    // ----Dropdown code----
 
     return (
 
