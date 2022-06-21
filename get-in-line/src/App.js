@@ -5,6 +5,8 @@ import AdminPage from './pages/AdminPage';
 import LoginPage from './pages/LoginPage';
 import UserPage from './pages/UserPage';
 import NewAccountPage from './pages/NewAccountPage';
+import Register from './pages/Register';
+import Reset from './pages/Reset';
 
 
 function App() {
@@ -16,6 +18,8 @@ function App() {
         <Route exact path='/user' element={<UserPage/>} />
         <Route exact path='/admin' element={<AdminPage/>} />
         <Route exact path='/create' element={<NewAccountPage/>} />
+        <Route exact path="/register" element={<Register />} />
+        <Route exact path="/reset" element={<Reset />} />
       </Routes>
     </Router>
   )
