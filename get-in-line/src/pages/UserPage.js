@@ -43,30 +43,100 @@ export default function User() {
     let eventName = value;
     // ----Dropdown code----
 
-    return (
 
-        <Main>
-            <GetInLineTitle/>
-            <Dropdown
-                label="Select an Event "
-                options={options}
-                value={value}
-                onChange={handleChange}
-            />
+    function verifyUserAdd() {
+        //TODO: Need User name
+        var UserName = '';
+        var Event = eventName;
+    
+        if (Event == '') {
+          alert("Please Select an event")
+          return;
+        } else {
+          addUser(Event, UserName);
+        }
+    }
 
-            <p></p>
-            <h2>{value}</h2>
-            <p>Distance from you: </p>
-            <p>Current number of people in line: </p>
-            <p>Estimated waiting time:</p>
-            <button >Get In Line!</button> 
-            <p></p>
-            <button >View Your Queues</button> 
-            <button >Settings</button> 
-            <LogoutButton/>
-        </Main>
-        
+    async function addUser(Event, UserName) {
+        //Initialize event document
+        const path = 'event/' + Event;
+        const event = doc(db, 'event', Event);
+        let queue = [];
+    
+        //Query into firebase to read queue from document
+        const queuesQuery = query(
+          collection(db, 'event'),
+          limit(100) // Just to make sure we're not querying more than 100 events. Can be removed if database grows and is needed
+        );
+    
+        const querySnapshot = await getDocs(queuesQuery);
+        const allDocs = querySnapshot.forEach((snap) => {
+          if (snap.data().name == Event) {
+            queue = snap.data().queue;
+          }
+        });
+    
+        //add user to queue
+        queue.push(UserName);
+    
+        //update document with new queue and number of people
+        updateDoc(event, {
+          numOfPeople: queue.length,
+          queue: queue
+        });
+    
+        alert("Adding " + UserName + " to " + Event);
+      }
+    
+
+
+    // If null value in dropdown dont display event info, else displayed selected
+    // event info
+    if (value == '') {
+        return (
+
+            <Main>
+                <GetInLineTitle/>
+                <Dropdown
+                    label="Select an Event "
+                    options={options}
+                    value={value}
+                    onChange={handleChange}
+                />
+    
+                <p></p>
+                <button >View Your Queues</button> 
+                <button >Settings</button> 
+                <LogoutButton/>
+            </Main>
+            
+        );         
+    } else {  
+        return (
+
+            <Main>
+                <GetInLineTitle/>
+                <Dropdown
+                    label="Select an Event "
+                    options={options}
+                    value={value}
+                    onChange={handleChange}
+                />
+
+                <p></p>
+                <h2>{value}</h2>
+                <p>Distance from you: </p>
+                <p>Current number of people in line: </p>
+                <p>Estimated waiting time:</p>
+                <button onClick={() => verifyUserAdd()}> Get in Line! </button>
+                <p></p>
+                <button >View Your Queues</button> 
+                <button >Settings</button> 
+                <LogoutButton/>
+            </Main>
+       
     );
+    }
 };
 
 
