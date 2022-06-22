@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import GetInLineTitle from '../components/GetInLineTitle';
-import LogoutButton from '../components/LogoutButton';
 import { useNavigate } from 'react-router-dom';
 import Event from '../components/Event';
 
@@ -24,7 +23,7 @@ export default function AdminPage() {
         const doc = await getDocs(q);
         const data = doc.docs[0].data();
         setName(data.name);
-        
+
       } catch (err) {
         console.error(err);
         alert("An error occured while fetching user data");
@@ -91,7 +90,9 @@ export default function AdminPage() {
           View Existing Queues
           </button>
         <button> Settings </button>
-        <LogoutButton/>
+        <button className="dashboard__btn" onClick={logout}>
+          Logout
+         </button>
         <br/><br/><br/><hr/><br/><br/><br/>
         Event Name* <input type="text" id="eventName"/> <br/>
         Address <input type="text" id="address"/> <br/>
