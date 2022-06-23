@@ -92,6 +92,7 @@ export default function AdminPage() {
           View Existing Queues
           </button>
         <button> Settings </button>
+        <button onClick={() => goToUserPage()} > Go To User Page </button>
         <button className="dashboard__btn" onClick={logout}>
           Logout
          </button>
@@ -227,7 +228,6 @@ export default function AdminPage() {
     const path = 'event/' + eventName;
     const newEvent = doc(db, path);
     
-    
     const docData = {
       address: addressInput,
       name: eventName,
@@ -259,6 +259,10 @@ export default function AdminPage() {
     });
 
     document.getElementById("queues").innerHTML = listOfQueues;
+  }
+
+  function goToUserPage() {
+    navigate('/user');
   }
 
 }
