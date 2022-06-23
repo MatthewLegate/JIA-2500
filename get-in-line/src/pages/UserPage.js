@@ -2,6 +2,9 @@ import * as React from 'react';
 import GetInLineTitle from '../components/GetInLineTitle'
 import styled from "styled-components";
 import LogoutButton from '../components/LogoutButton';
+import { auth, db, logout } from '../Firebase';
+import { collection, doc, getDocs, query, setDoc, limit, onSnapshot, deleteDoc, updateDoc, where } from 'firebase/firestore';
+import { async } from '@firebase/util';
 
 const Main = styled("div")`
   font-family: sans-serif;
@@ -10,47 +13,130 @@ const Main = styled("div")`
 `;
 
 export default function User() {
+    // ----Dropdown code----
+    const [events, setEvents] = React.useState([]);
+    
+    const q = query(collection(db, "event"));
+    const eventList = onSnapshot(q, (querySnapshot) => {
+      let eventsArray = [];
+      querySnapshot.forEach((doc) => {
+        eventsArray.push({ ...doc.data(), id: doc.id });
+      });
+      setEvents(eventsArray);
+    });
+    
+    let options1 = events;
+    let options = []
+    for (let i = 0; i < options1.length; i++) {
+        options[i] = {label: options1[i].name, value: options1[i].name};
+    }
 
-    const options = [
-        { label: 'Event 1', value: 'Event 1' },
-        { label: 'Event 2', value: 'Event 2' },
-        { label: 'Event 3', value: 'Event 3' },
-        { label: 'Event 4', value: 'Event 4' },
-        { label: 'Event 5', value: 'Event 5' },
-    ];
+    //add empty string to events list to avoid errors with default state
+    options.unshift('');
 
-    const [value, setValue] = React.useState('Event 1');
+    const [value, setValue] = React.useState('');
 
-    const handleChange = (event) => {
-        setValue(event.target.value);
+    const handleChange = (selected) => {
+        setValue(selected.target.value);
     };
 
-    let eventName = <h1>value</h1>
+    let eventName = value;
+    // ----Dropdown code----
 
-    return (
 
-        <Main>
-            <GetInLineTitle/>
-            <Dropdown
-                label="Select an Event "
-                options={options}
-                value={value}
-                onChange={handleChange}
-            />
+    function verifyUserAdd() {
+        //TODO: Need User name
+        var UserName = '';
+        var Event = eventName;
+    
+        if (Event == '') {
+          alert("Please Select an event")
+          return;
+        } else {
+          addUser(Event, UserName);
+        }
+    }
 
-            <p></p>
-            <h2>{value}</h2>
-            <p>Distance from you: </p>
-            <p>Current number of people in line: </p>
-            <p>Estimated waiting time:</p>
-            <button >Get In Line!</button> 
-            <p></p>
-            <button >View Your Queues</button> 
-            <button >Settings</button> 
-            <LogoutButton/>
-        </Main>
-        
+    async function addUser(Event, UserName) {
+        //Initialize event document
+        const path = 'event/' + Event;
+        const event = doc(db, 'event', Event);
+        let queue = [];
+    
+        //Query into firebase to read queue from document
+        const queuesQuery = query(
+          collection(db, 'event'),
+          limit(100) // Just to make sure we're not querying more than 100 events. Can be removed if database grows and is needed
+        );
+    
+        const querySnapshot = await getDocs(queuesQuery);
+        const allDocs = querySnapshot.forEach((snap) => {
+          if (snap.data().name == Event) {
+            queue = snap.data().queue;
+          }
+        });
+    
+        //add user to queue
+        queue.push(UserName);
+    
+        //update document with new queue and number of people
+        updateDoc(event, {
+          numOfPeople: queue.length,
+          queue: queue
+        });
+    
+        alert("Adding " + UserName + " to " + Event);
+      }
+    
+
+
+    // If null value in dropdown dont display event info, else displayed selected
+    // event info
+    if (value == '') {
+        return (
+
+            <Main>
+                <GetInLineTitle/>
+                <Dropdown
+                    label="Select an Event "
+                    options={options}
+                    value={value}
+                    onChange={handleChange}
+                />
+    
+                <p></p>
+                <button >View Your Queues</button> 
+                <button >Settings</button> 
+                <LogoutButton/>
+            </Main>
+            
+        );         
+    } else {  
+        return (
+
+            <Main>
+                <GetInLineTitle/>
+                <Dropdown
+                    label="Select an Event "
+                    options={options}
+                    value={value}
+                    onChange={handleChange}
+                />
+
+                <p></p>
+                <h2>{value}</h2>
+                <p>Distance from you: </p>
+                <p>Current number of people in line: </p>
+                <p>Estimated waiting time:</p>
+                <button onClick={() => verifyUserAdd()}> Get in Line! </button>
+                <p></p>
+                <button >View Your Queues</button> 
+                <button >Settings</button> 
+                <LogoutButton/>
+            </Main>
+       
     );
+    }
 };
 
 

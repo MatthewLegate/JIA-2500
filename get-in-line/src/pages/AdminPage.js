@@ -1,7 +1,8 @@
+import ReactDOM from "react-dom";
 import React, { useEffect, useState } from "react";
 import GetInLineTitle from '../components/GetInLineTitle';
-import LogoutButton from '../components/LogoutButton';
 import { useNavigate } from 'react-router-dom';
+import QRCode from 'react-qr-code'
 import Event from '../components/Event';
 
 import { auth, db, logout } from '../Firebase';
@@ -24,7 +25,7 @@ export default function AdminPage() {
         const doc = await getDocs(q);
         const data = doc.docs[0].data();
         setName(data.name);
-        
+
       } catch (err) {
         console.error(err);
         alert("An error occured while fetching user data");
@@ -91,11 +92,15 @@ export default function AdminPage() {
           View Existing Queues
           </button>
         <button> Settings </button>
-        <LogoutButton/>
+        <button className="dashboard__btn" onClick={logout}>
+          Logout
+         </button>
         <br/><br/><br/><hr/><br/><br/><br/>
         Event Name* <input type="text" id="eventName"/> <br/>
         Address <input type="text" id="address"/> <br/>
         <button onClick={() => verifyEvent()}> Add Event </button>
+        <button onClick={() => generateQR()}> Create QR Code </button>
+        <div id="qrcode"> </div>
         <p></p>
         <Dropdown
                 label="Select an Event "
@@ -221,6 +226,8 @@ export default function AdminPage() {
   function addEvent(eventName, addressInput) {
     const path = 'event/' + eventName;
     const newEvent = doc(db, path);
+    
+    
     const docData = {
       address: addressInput,
       name: eventName,
@@ -229,6 +236,14 @@ export default function AdminPage() {
     };
     setDoc(newEvent, docData);
     alert("Adding " + eventName + " to database");
+    
+  }
+
+  function generateQR(){
+    var eventName = document.getElementById("eventName").value;
+    ReactDOM.render(<QRCode value={eventName} />, document.getElementById("qrcode"));
+    //var qrc = new QRCode(document.getElementById("qrcode"), eventName);
+    //document.getElementById("qrcode").innerHTML = qrc;
   }
 
   async function showExistingQueues() {
