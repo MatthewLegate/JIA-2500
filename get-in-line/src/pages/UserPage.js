@@ -13,6 +13,13 @@ const Main = styled("div")`
 `;
 
 export default function User() {
+    const [userInfoValue, setUserInfo] = React.useState(false);
+
+    const promptInfo = () => {
+        setUserInfo(true);
+      };
+
+    let userInfo = userInfoValue;
     // ----Dropdown code----
     const [events, setEvents] = React.useState([]);
     
@@ -46,14 +53,18 @@ export default function User() {
 
     function verifyUserAdd() {
         //TODO: Need User name
-        var UserName = '';
+        var Name = document.getElementById("Name").value;
+        var Email = document.getElementById("Email").value;
         var Event = eventName;
     
-        if (Event == '') {
-          alert("Please Select an event")
+        if (Name.length == 0) {
+          alert("Please enter your name")
           return;
+        } else if (Email.length == 0) {
+            alert("Please enter your email")
+            return;
         } else {
-          addUser(Event, UserName);
+          addUser(Event, Name);
         }
     }
 
@@ -112,30 +123,62 @@ export default function User() {
             
         );         
     } else {  
-        return (
+        if (!userInfo) {
+            return (
 
-            <Main>
-                <GetInLineTitle/>
-                <Dropdown
-                    label="Select an Event "
-                    options={options}
-                    value={value}
-                    onChange={handleChange}
-                />
+                <Main>
+                    <GetInLineTitle/>
+                    <Dropdown
+                        label="Select an Event "
+                        options={options}
+                        value={value}
+                        onChange={handleChange}
+                    />
+    
+                    <p></p>
+                    <h2>{value}</h2>
+                    <p>Distance from you: </p>
+                    <p>Current number of people in line: </p>
+                    <p>Estimated waiting time:</p>
+                    <p></p>
+                    <button onClick={() => promptInfo()}> Get in Line! </button>
+                    <p></p>
+                    <button >View Your Queues</button> 
+                    <button >Settings</button> 
+                    <LogoutButton/>
+                </Main>
+           
+        );
+        } else {
+            return (
 
-                <p></p>
-                <h2>{value}</h2>
-                <p>Distance from you: </p>
-                <p>Current number of people in line: </p>
-                <p>Estimated waiting time:</p>
-                <button onClick={() => verifyUserAdd()}> Get in Line! </button>
-                <p></p>
-                <button >View Your Queues</button> 
-                <button >Settings</button> 
-                <LogoutButton/>
-            </Main>
-       
-    );
+                <Main>
+                    <GetInLineTitle/>
+                    <Dropdown
+                        label="Select an Event "
+                        options={options}
+                        value={value}
+                        onChange={handleChange}
+                    />
+    
+                    <p></p>
+                    <h2>{value}</h2>
+                    <p>Distance from you: </p>
+                    <p>Current number of people in line: </p>
+                    <p>Estimated waiting time:</p>
+                    Name* <input type="text" id="Name"/> <br/>
+                    Email* <input type="text" id="Email"/> <br/>
+                    <p></p>
+                    <button onClick={() => verifyUserAdd()}> Submit </button>
+                    <p></p>
+                    <button >View Your Queues</button> 
+                    <button >Settings</button> 
+                    <LogoutButton/>
+                </Main>
+           
+        );
+        }
+
     }
 };
 
