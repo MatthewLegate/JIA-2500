@@ -69,18 +69,46 @@ export default function User() {
         }
     }
 
-    function removeUser(Event, UserName, UserEmail) {
-        //Initialize event document 
-        alert("removing " + UserName + " from " + Event);
-        var event = db.doc(Event);
+    async function removeUser(Event, UserName, UserEmail) {
+            //Initialize event document
+        const path = 'event/' + Event;
+        const event = doc(db, 'event', Event);
+        let Userqueue = [];
+        let Emailqueue = [];
 
-        // Atomically add a new region to the "regions" array field.
-        event.update({
-            emailQueue: arrayRemove(UserEmail)
+        //Query into firebase to read queue from document
+        const queuesQuery = query(
+          collection(db, 'event'),
+          limit(100) // Just to make sure we're not querying more than 100 events. Can be removed if database grows and is needed
+        );
+
+        const querySnapshot = await getDocs(queuesQuery);
+        const allDocs = querySnapshot.forEach((snap) => {
+          if (snap.data().name == Event) {
+            Userqueue = snap.data().userQueue;
+            Emailqueue = snap.data().emailQueue;
+          }
         });
-        event.update({
-          userQueue: arrayRemove(UserName)
+
+        //remove user from queue
+        Userqueue = Userqueue.filter(function(UserName) {
+          alert("removing1");
+          return UserName !== UserName
+        })
+
+        Emailqueue = Emailqueue.filter(function(UserEmail) {
+          alert("removing2");
+          return UserEmail !== UserEmail
+        })
+
+        //update document with new queue and number of people
+        updateDoc(event, {
+          numOfPeople: Userqueue.length,
+          userQueue: Userqueue,
+          emailQueue: Emailqueue
         });
+
+        alert("Removing " + UserName + " from " + Event);
     }
 
     function verifyUserAdd() {
