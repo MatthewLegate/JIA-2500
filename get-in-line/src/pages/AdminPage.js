@@ -241,7 +241,7 @@ export default function AdminPage() {
 
   function generateQR(){
     var eventName = document.getElementById("eventName").value;
-    ReactDOM.render(<QRCode value={eventName} />, document.getElementById("qrcode"));
+    ReactDOM.render(<QRCode value={window.location.hostname +/user/ +eventName} />, document.getElementById("qrcode"));
     //var qrc = new QRCode(document.getElementById("qrcode"), eventName);
     //document.getElementById("qrcode").innerHTML = qrc;
   }
