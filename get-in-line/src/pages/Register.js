@@ -45,6 +45,9 @@ function Register() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         />
+        <input type="checkbox" id="admin" name="admin"
+             checked/>
+      <label for="admin">Admin</label>
         <button className="register__btn" onClick={register}>
           Register
         </button>
