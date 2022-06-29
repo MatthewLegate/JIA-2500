@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useID } from "react";
 import GetInLineTitle from '../components/GetInLineTitle';
 import { useNavigate } from 'react-router-dom';
 import QRCode from 'react-qr-code'
@@ -150,7 +150,6 @@ export default function AdminPage() {
 
  async function addUser(Event, UserName) {
     //Initialize event document
-    const path = 'event/' + Event;
     const event = doc(db, 'event', Event);
     let queue = [];
 
@@ -181,7 +180,6 @@ export default function AdminPage() {
 
   async function RemoveUser(Event, UserName) {
     //Initialize event document
-    const path = 'event/' + Event;
     const event = doc(db, 'event', Event);
     let queue = [];
 
@@ -232,7 +230,8 @@ export default function AdminPage() {
       address: addressInput,
       name: eventName,
       numOfPeople: 0,
-      queue: []
+      queue: [],
+      id: Date.now().toString(36) + Math.floor(Math.pow(10, 12) + Math.random() * 9*Math.pow(10, 12)).toString(36)
     };
     setDoc(newEvent, docData);
     alert("Adding " + eventName + " to database");
@@ -241,7 +240,7 @@ export default function AdminPage() {
 
   function generateQR(){
     var eventName = document.getElementById("eventName").value;
-    ReactDOM.render(<QRCode value={eventName} />, document.getElementById("qrcode"));
+    ReactDOM.render(<QRCode value={window.location.hostname +/user/ +eventName} />, document.getElementById("qrcode"));
     //var qrc = new QRCode(document.getElementById("qrcode"), eventName);
     //document.getElementById("qrcode").innerHTML = qrc;
   }
