@@ -7,16 +7,28 @@ import {
   signInWithGoogle,
 } from "../Firebase";
 import "./register.css";
+
+var adminStatus = true;
+
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [user, loading, error] = useAuthState(auth);
+  const [isAdmin, setIsAdmin] = useState(true);
   const navigate = useNavigate();
 
+  const handleAdminChange = event => {
+    setIsAdmin(event.target.checked);
+    adminStatus = event.target.checked;
+    console.log(event.target.checked);
+    console.log("adminStatus: " + adminStatus);
+  };
+  
   const register = () => {
     if (!name) alert("Please enter name");
-    registerWithEmailAndPassword(name, email, password);
+
+    registerWithEmailAndPassword(name, email, password, adminStatus);
   };
   useEffect(() => {
     if (loading) return;
@@ -45,6 +57,8 @@ function Register() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         />
+        <input type="checkbox" id="admin" name="admin" onChange={handleAdminChange} checked={isAdmin} />
+      <label for="admin">Admin</label>
         <button className="register__btn" onClick={register}>
           Register
         </button>
