@@ -38,9 +38,6 @@ export default function EventDisplayPage() {
             <button onClick={() => verifyUserAdd()}> Submit </button>
             <button onClick={() => verifyUserRemove()}> Dequeue </button>
             <p></p>
-            <button >View Your Queues</button> 
-            <button >Settings</button> 
-            <LogoutButton/>
             </div>
            
         );
@@ -127,8 +124,7 @@ export default function EventDisplayPage() {
         //Initialize event document
         const path = 'event/' + Event;
         const event = doc(db, 'event', Event);
-        let Userqueue = [];
-        let Emailqueue = [];
+        let queue = [];
     
         //Query into firebase to read queue from document
         const queuesQuery = query(
@@ -139,20 +135,17 @@ export default function EventDisplayPage() {
         const querySnapshot = await getDocs(queuesQuery);
         const allDocs = querySnapshot.forEach((snap) => {
           if (snap.data().name == Event) {
-            Userqueue = snap.data().userQueue;
-            Emailqueue = snap.data().emailQueue;
+            queue = snap.data().queue;
           }
         });
     
         //add user to queue
-        Userqueue.push(UserName);
-        Emailqueue.push(UserEmail);
+        queue.push(UserName);
     
         //update document with new queue and number of people
         updateDoc(event, {
-          numOfPeople: Userqueue.length,
-          userQueue: Userqueue,
-          emailQueue: Emailqueue
+          numOfPeople: queue.length,
+          queue: queue,
         });
     
         alert("Adding " + UserName + " to " + Event);
