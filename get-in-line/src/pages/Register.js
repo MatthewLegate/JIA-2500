@@ -16,13 +16,10 @@ function Register() {
   const [name, setName] = useState("");
   const [user, loading, error] = useAuthState(auth);
   const [isAdmin, setIsAdmin] = useState(true);
-  const navigate = useNavigate();
 
   const handleAdminChange = event => {
     setIsAdmin(event.target.checked);
     adminStatus = event.target.checked;
-    console.log(event.target.checked);
-    console.log("adminStatus: " + adminStatus);
   };
   
   const register = () => {

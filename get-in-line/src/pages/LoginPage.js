@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import GetInLineTitle from '../components/GetInLineTitle';
 
 
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, query, collection, limit, getDocs } from "firebase/firestore";
 import { db } from '../Firebase';
 
 import { Link, useNavigate } from "react-router-dom";
@@ -22,7 +22,13 @@ function Login() {
       // maybe trigger a loading screen
       return;
     }
-    if (user) navigate("/admin");
+    if (user)  {
+      if (user.admin) {
+        navigate("/admin");
+      } else {
+        navigate("/user");
+      }
+    }
   }, [user, loading]);
   return (
 
