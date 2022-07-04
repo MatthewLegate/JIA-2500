@@ -7,6 +7,7 @@ import { collection, doc, getDocs, query, setDoc, limit, onSnapshot, deleteDoc, 
 import { async } from '@firebase/util';
 import EventDisplayPage from './EventDisplayPage';
 import {Outlet, useNavigate} from 'react-router-dom';
+import { findUserCoordinates } from '../components/Location';
 
 //import firebase from 'firebase/compat/app';
 
@@ -65,6 +66,13 @@ export default function User() {
             <button >View Your Queues</button> 
             <button >Settings</button> 
             <LogoutButton/>
+            <br/><br/><br/><br/><br/>
+
+            <div className='container'>
+                <h1 className='status'></h1>
+                <p id='coordinates'></p>
+                <button className='display-coordinates' onClick={findUserCoordinates}> Display My Coordinates</button>
+            </div>
         </Main>
         
         
