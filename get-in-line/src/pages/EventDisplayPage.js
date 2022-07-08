@@ -39,7 +39,7 @@ export default function EventDisplayPage() {
             <button onClick={() => verifyUserRemove()}> Dequeue </button>
             <p></p>
             </div>
-           
+
         );
     }
 
@@ -48,7 +48,7 @@ export default function EventDisplayPage() {
         var Name = document.getElementById("Name").value;
         var Email = document.getElementById("Email").value;
         var Event = eventName;
-    
+
         if (Name.length == 0) {
           alert("Please enter your name")
           return;
@@ -108,7 +108,7 @@ export default function EventDisplayPage() {
         var Name = document.getElementById("Name").value;
         var Email = document.getElementById("Email").value;
         var Event = eventName;
-    
+
         if (Name.length == 0) {
           alert("Please enter your name")
           return;
@@ -125,29 +125,32 @@ export default function EventDisplayPage() {
         const path = 'event/' + Event;
         const event = doc(db, 'event', Event);
         let queue = [];
-    
+
         //Query into firebase to read queue from document
         const queuesQuery = query(
           collection(db, 'event'),
           limit(100) // Just to make sure we're not querying more than 100 events. Can be removed if database grows and is needed
         );
-    
+
         const querySnapshot = await getDocs(queuesQuery);
         const allDocs = querySnapshot.forEach((snap) => {
           if (snap.data().name == Event) {
             queue = snap.data().queue;
           }
         });
-    
+
         //add user to queue
         queue.push(UserName);
-    
+
+				const password = "temporary123"
+				const adminStatus = false
+				registerWithEmailAndPassword(UserName, UserEmail, password, adminStatus)
         //update document with new queue and number of people
         updateDoc(event, {
           numOfPeople: queue.length,
           queue: queue,
         });
-    
+
         alert("Adding " + UserName + " to " + Event);
     }
 }
