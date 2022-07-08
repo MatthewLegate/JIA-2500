@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import * as React from 'react';
 import { collection, doc, getDocs, query, setDoc, limit, onSnapshot, deleteDoc, updateDoc, where, arrayRemove } from 'firebase/firestore';
 import LogoutButton from '../components/LogoutButton';
-import { auth, db, logout } from '../Firebase';
+import { auth, db, logout, registerWithEmailAndPassword, } from '../Firebase';
 export default function EventDisplayPage() {
 
 	const [needUserInfo, setNeedUserInfo] = React.useState(false);
