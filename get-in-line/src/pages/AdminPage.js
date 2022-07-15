@@ -210,6 +210,57 @@ export default function AdminPage() {
     alert("Removing " + UserName + " from " + Event);
   }
 
+
+  //Used so the admin can call the next person in line and remove them from the queue
+  async function removeFirstUser(Event) {
+
+    //add timestamp to document in order to be able to calculate average wait times
+    //stored in milliseconds since unix epoch
+    const currTime = Date.now()
+    //Initialize event document
+    const event = doc(db, 'event', Event);
+    let queue = [];
+    let dequeueTimes = []
+
+
+    //Query into firebase to read queue from document
+    const queuesQuery = query(
+      collection(db, 'event'),
+      limit(100) // Just to make sure we're not querying more than 100 events. Can be removed if database grows and is needed
+    );
+
+    const querySnapshot = await getDocs(queuesQuery);
+    querySnapshot.forEach((snap) => {
+      if (snap.data().name == Event) {
+        queue = snap.data().queue;
+      }
+    });
+
+    querySnapshot.forEach((snap) => {
+      if (snap.data().name == Event) {
+        dequeueTimes = snap.data().dequeueTimes;
+      }
+    });
+
+    var nextUser = queue.shift()
+
+    if (typeof nextUser === 'undefined') {
+      alert("tried to remove the next user but the queue is empty")
+    }
+    else {
+      dequeueTimes.push(currTime)
+    }
+    
+
+    updateDoc(event, {
+      numOfPeople: queue.length,
+      queue: queue,
+      dequeueTimes: dequeueTimes
+    });
+
+    return nextUser
+  }
+
   function verifyEvent() {
     var eventName = document.getElementById("eventName").value;
     var address = document.getElementById("address").value;
