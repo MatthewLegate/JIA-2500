@@ -3,15 +3,54 @@ import * as React from 'react';
 import { collection, doc, getDocs, query, setDoc, limit, onSnapshot, deleteDoc, updateDoc, where, arrayRemove } from 'firebase/firestore';
 import LogoutButton from '../components/LogoutButton';
 import { auth, db, logout } from '../Firebase';
-export default function EventDisplayPage() {
 
-	const [needUserInfo, setNeedUserInfo] = React.useState(false);
+export default function EventDisplayPage() {
+  
+
+  ///////////////////////////////////////
+  //SMS class, used to send texts to user
+  class SMS extends React.Component {
+    state = {
+        text: {
+          recipient: '',
+          textmessage: 'Youre in line for ' + eventName + '!'
+        }
+      }
+    
+      //Sends text and adds user to queue
+      sendTextAddUser = _ => {
+        const { text } = this.state;
+        //pass text message GET variables via query string
+        fetch(`http://127.0.0.1:4000/send-text?recipient=${text.recipient}&textmessage=${text.textmessage}`)
+        .catch(err => console.error(err))
+
+        //add user to queue on same button click
+        verifyUserAdd();
+      }
+    
+      //what shows up on UI
+      render() {
+        const { text } = this.state;
+        return (
+            <div >
+              Phone #* <input value={text.recipient}
+                onChange={e => this.setState({ text: { ...text, recipient: e.target.value } })} />
+              <p></p>
+              <button onClick={this.sendTextAddUser}> Submit </button>
+            </div>
+        );
+      }
+  }
+  ///////////////////////////////////////
+
+
+
+  const [needUserInfo, setNeedUserInfo] = React.useState(false);
     const promptInfo = () => {
         setNeedUserInfo(true);
     };
     const {eventName} = useParams();
-
-
+  
 	if (!needUserInfo) {
         return (
         	<div>
@@ -33,17 +72,18 @@ export default function EventDisplayPage() {
             <p>Current number of people in line: </p>
             <p>Estimated waiting time:</p>
             Name* <input type="text" id="Name"/> <br/>
+            <p></p>
             Email* <input type="text" id="Email"/> <br/>
             <p></p>
-            <button onClick={() => verifyUserAdd()}> Submit </button>
+            <SMS />
             <button onClick={() => verifyUserRemove()}> Dequeue </button>
             <p></p>
-            </div>
+          </div>
            
         );
     }
 
-
+    
 	function verifyUserRemove() {
         var Name = document.getElementById("Name").value;
         var Email = document.getElementById("Email").value;
@@ -94,7 +134,6 @@ export default function EventDisplayPage() {
     }
 
     function verifyUserAdd() {
-        //TODO: Need User name
         var Name = document.getElementById("Name").value;
         var Email = document.getElementById("Email").value;
         var Event = eventName;
@@ -137,7 +176,11 @@ export default function EventDisplayPage() {
           numOfPeople: queue.length,
           queue: queue,
         });
-    
+
+
         alert("Adding " + UserName + " to " + Event);
     }
+
 }
+
+
