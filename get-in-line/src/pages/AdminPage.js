@@ -212,6 +212,8 @@ export default function AdminPage() {
 
 
   //Used so the admin can call the next person in line and remove them from the queue
+  //TODO: add a cap to how many timestamps are added, to ensure that average wait time takes into account only recent data
+  //TODO: ensure that times when the queue is empty does not affect average wait time calculations
   async function removeFirstUser(Event) {
 
     //add timestamp to document in order to be able to calculate average wait times
@@ -259,6 +261,41 @@ export default function AdminPage() {
     });
 
     return nextUser
+  }
+
+
+  function calculateAverageWait(event) {
+    const event = doc(db, 'event', Event);
+    let dequeueTimes = []
+
+
+    const queuesQuery = query(
+      collection(db, 'event'),
+      limit(100) // Just to make sure we're not querying more than 100 events. Can be removed if database grows and is needed
+    );
+
+    const querySnapshot = await getDocs(queuesQuery);
+
+
+    querySnapshot.forEach((snap) => {
+      if (snap.data().name == Event) {
+        dequeueTimes = snap.data().dequeueTimes;
+      }
+    });
+
+    //need at least two times in order to be able to calculate average wait
+    if (dequeueTimes.length < 2) {
+      return NaN
+    }
+
+    let numPeople = 0
+    let accumulatedTime = 0
+    for (; numPeople + 1 < dequeueTimes.length; numPeople++) {
+      accumulatedTime += dequeueTimes[numPeople] - dequeueTimes[numPeople + 1]
+    }
+
+    return accumulatedTime/numPeople
+
   }
 
   function verifyEvent() {
