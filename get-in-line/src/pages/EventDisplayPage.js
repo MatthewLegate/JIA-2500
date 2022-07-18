@@ -18,7 +18,7 @@ export default function EventDisplayPage() {
       // maybe trigger a loading screen
       return;
     }
-    
+
   }, [user, loading]);
   ///////////////////////////////////////
   //SMS class, used to send texts to user
@@ -134,6 +134,13 @@ export default function EventDisplayPage() {
       });
 
       alert("Removing " + UserEmail + " from " + Event);
+
+      
+      user.delete().then(function() {
+        // User deleted.
+      }, function(error) {
+        // An error happened.
+      });
     }
 
     function verifyUserAdd() {
