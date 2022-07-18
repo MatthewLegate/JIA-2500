@@ -25,9 +25,7 @@ function Login() {
     if (user)  {
       if (user.admin) {
         navigate("/admin");
-      } else {
-        navigate("/user");
-      }
+      } 
     }
   }, [user, loading]);
   return (
