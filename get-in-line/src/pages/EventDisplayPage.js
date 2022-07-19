@@ -34,7 +34,7 @@ export default function EventDisplayPage() {
       sendTextAddUser = _ => {
         const { text } = this.state;
         //pass text message GET variables via query string
-        fetch(`http://127.0.0.1:4000/send-text?recipient=${text.recipient}&textmessage=${text.textmessage}`)
+        fetch(`http://localhost:4000/send-text?recipient=${text.recipient}&textmessage=${text.textmessage}`)
         .catch(err => console.error(err))
 
         //add user to queue on same button click
@@ -69,7 +69,7 @@ export default function EventDisplayPage() {
         	<div>
             <p></p>
             <h2>{eventName}</h2>
-            <p>Distance from you: </p>
+            <p id='distanceFromUser'>Distance from you: </p>
             <p>Current number of people in line: </p>
             <p>Estimated waiting time:</p>
             Name* <input type="text" id="Name"/> <br/>
