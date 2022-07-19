@@ -37,9 +37,6 @@ app.get('/send-text', (req, res) => {
 
 //Google Maps API
 app.get('/calculate-distance', (req, res) => {
-    //Welcome Message
-    //res.send('Hello to the Google Maps API Server');
-
     const { origins, destinations } = req.query;
 
     var config = {

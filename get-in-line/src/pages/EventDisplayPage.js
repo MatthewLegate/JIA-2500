@@ -86,7 +86,7 @@ export default function EventDisplayPage() {
         	<div>
             <p></p>
             <h2>{eventName}</h2>
-            <p>Distance from you: </p>
+            <p id='distanceFromUser'>Distance from you: </p>
             <p>Current number of people in line: </p>
             <p>Estimated waiting time:</p>
 
