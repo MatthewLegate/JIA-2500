@@ -16,16 +16,23 @@ function Register() {
   const [name, setName] = useState("");
   const [user, loading, error] = useAuthState(auth);
   const [isAdmin, setIsAdmin] = useState(true);
+  const navigate = useNavigate();
 
   const handleAdminChange = event => {
     setIsAdmin(event.target.checked);
     adminStatus = event.target.checked;
   };
-  
+
   const register = () => {
     if (!name) alert("Please enter name");
 
-    registerWithEmailAndPassword(name, email, password, adminStatus);
+    try {
+      registerWithEmailAndPassword(name, email, password, adminStatus);
+      navigate("/login");
+    } catch (e) {
+      console.log('Error')
+    }
+
   };
   useEffect(() => {
     if (loading) return;
