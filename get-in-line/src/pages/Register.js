@@ -24,16 +24,23 @@ function Register() {
   };
 
   const register = () => {
-    if (!name) alert("Please enter name");
-
-    try {
-      registerWithEmailAndPassword(name, email, password, adminStatus);
-      navigate("/login");
-    } catch (e) {
-      console.log('Error')
+    var validationCode = validate();
+    if (validationCode === 1) {
+      alert("Please enter name.");
+    } else if (validationCode === 2) {
+      alert("Please enter a valid email.");
+    } else if (validationCode === 3) {
+      alert("Please enter a password.");
+    } else {
+      try {
+        registerWithEmailAndPassword(name, email, password, adminStatus);
+        navigate("/login");
+      } catch (e) {
+        console.log('Error');
+      }
     }
-
   };
+
   useEffect(() => {
     if (loading) return;
   }, [user, loading]);
@@ -78,5 +85,24 @@ function Register() {
       </div>
     </div>
   );
+
+
+  // ---------- HELPER FUNCTIONS ----------
+  function validate() {
+    if (!name) {
+      return 1;
+    }
+    if (!isEmail(email)) {
+      return 2;
+    }
+    if (!password) {
+      return 3;
+    }
+  }
+
+  function isEmail(string) {
+    var matcher = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    return matcher.test(string);
+  }
 }
 export default Register;

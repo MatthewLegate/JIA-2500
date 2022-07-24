@@ -5,11 +5,13 @@ var axios = require('axios');
 
 const app = express(); //alias
 
+require('dotenv').config();
+
 
 //twilio requirements -- change these to your account SID/token
-const accountSid = 'ACb8365cc26d37909576524d979324fa1d';
-const authToken = '78e7c8080797af17586e4517764a48f4'; 
-var client = new twilio(accountSid, authToken);
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = "78e7c8080797af17586e4517764a48f4"; 
+const client = new twilio(accountSid, authToken);
 
 app.use(cors()); //Blocks browser from restricting any data
 
@@ -26,7 +28,6 @@ app.get('/send-text', (req, res) => {
     //_GET Variables
     const { recipient, textmessage } = req.query;
 
-
     //Send Text
     client.messages.create({
         body: textmessage,
@@ -41,13 +42,12 @@ app.get('/calculate-distance', (req, res) => {
 
     var config = {
         method: 'get',
-        url: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origins}&destinations=${destinations}&units=imperial&key=AIzaSyC6YEaZuMUMNF4pn0n6eONYrR7Vi0nqX4A`,
+        url: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origins}&destinations=${destinations}&units=imperial&key=${process.env.GOOGLE_MAPS_API_KEY}`,
         headers: { }
     };
       
     axios(config)
     .then(function (response) {
-        console.log("destinations: " + destinations);
         console.log(JSON.stringify(response.data));
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
