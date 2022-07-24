@@ -9,7 +9,7 @@ require('dotenv').config();
 
 
 //twilio requirements -- change these to your account SID/token
-const accountSid = "ACb8365cc26d37909576524d979324fa1d";
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = "78e7c8080797af17586e4517764a48f4"; 
 const client = new twilio(accountSid, authToken);
 
