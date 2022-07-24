@@ -9,8 +9,8 @@ require('dotenv').config();
 
 
 //twilio requirements -- change these to your account SID/token
-const accountSid = "ACb8365cc26d37909576524d979324fa1d";
-const authToken = "b8a802da6d116f64baf4bd7097ec1ac2"; 
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN; 
 const client = new twilio(accountSid, authToken);
 
 app.use(cors()); //Blocks browser from restricting any data
