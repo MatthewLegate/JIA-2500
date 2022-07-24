@@ -212,8 +212,6 @@ export default function AdminPage() {
 
 
   //Used so the admin can call the next person in line and remove them from the queue
-  //TODO: add a cap to how many timestamps are added, to ensure that average wait time takes into account only recent data
-  //TODO: ensure that times when the queue is empty does not affect average wait time calculations
   async function removeFirstUser(Event) {
 
     //add timestamp to document in order to be able to calculate average wait times
@@ -249,8 +247,13 @@ export default function AdminPage() {
     if (typeof nextUser === 'undefined') {
       alert("tried to remove the next user but the queue is empty")
     }
-    else {
+    else if (queue.length > 0) {
       dequeueTimes.push(currTime)
+    }
+    else {
+      //when the line ends we want to dump data so that this line does not affect the average wait time for the next line
+      //We do this since there may be changing variables, eg. staffing, new system, etc.
+      dequeueTimes = []
     }
     
 
@@ -296,6 +299,23 @@ export default function AdminPage() {
 
     return accumulatedTime/numPeople
 
+  }
+
+  function getWaitFor(event, userName) {
+    const average = calculateAverageWait(event)
+    let queue = [];
+
+    const querySnapshot = await getDocs(queuesQuery);
+    querySnapshot.forEach((snap) => {
+      if (snap.data().name == Event) {
+        queue = snap.data().queue;
+      }
+    });
+
+    let location = 0
+    for (; location < queue.length, location++) {
+      
+    }
   }
 
   function verifyEvent() {
