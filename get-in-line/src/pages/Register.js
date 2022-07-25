@@ -69,7 +69,7 @@ function Register() {
           placeholder="Password"
         />
         <input type="checkbox" id="admin" name="admin" onChange={handleAdminChange} checked={isAdmin} />
-      <label for="admin">Admin</label>
+      <label htmlFor="admin">Admin</label>
         <button className="register__btn" onClick={register}>
           Register
         </button>
