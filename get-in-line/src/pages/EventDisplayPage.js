@@ -193,4 +193,56 @@ export default function EventDisplayPage() {
         alert("Adding " + UserName + " to " + Event);
     }
 
+    function calculateAverageWait(event) {
+      const event = doc(db, 'event', Event);
+      let dequeueTimes = []
+  
+  
+      const queuesQuery = query(
+        collection(db, 'event'),
+        limit(100) // Just to make sure we're not querying more than 100 events. Can be removed if database grows and is needed
+      );
+  
+      const querySnapshot = await getDocs(queuesQuery);
+  
+  
+      querySnapshot.forEach((snap) => {
+        if (snap.data().name == Event) {
+          dequeueTimes = snap.data().dequeueTimes;
+        }
+      });
+  
+      //need at least two times in order to be able to calculate average wait
+      if (dequeueTimes.length < 2) {
+        return NaN
+      }
+  
+      let numPeople = 0
+      let accumulatedTime = 0
+      for (; numPeople + 1 < dequeueTimes.length; numPeople++) {
+        accumulatedTime += dequeueTimes[numPeople] - dequeueTimes[numPeople + 1]
+      }
+  
+      return accumulatedTime/numPeople
+  
+    }
+  
+    function getWaitFor(event, userName) {
+      const average = calculateAverageWait(event)
+      let queue = [];
+  
+      const querySnapshot = await getDocs(queuesQuery);
+      querySnapshot.forEach((snap) => {
+        if (snap.data().name == Event) {
+          queue = snap.data().queue;
+        }
+      });
+  
+      let location = 0
+      for (; location < queue.length, location++) {
+        
+      }
+    }
+  
+
 }
