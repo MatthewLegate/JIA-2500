@@ -47,6 +47,19 @@ GetInLine is an application that has the primary purpose of creating a virtual q
 </table>
 
 
+<div align="center"><a name="menu"></a>
+  <h4>
+    <a href="https://github.com/MatthewLegate/JIA-2500#release-notes--v100">
+      Release Notes
+    </a>
+    <span> | </span>
+    <a href="https://github.com/MatthewLegate/JIA-2500#install-guide">
+      Install Guide
+    </a>
+  </h4>
+</div>
+
+
 <h1>Release Notes – v1.0.0</h1>
 
 <h3>NEW FEATURES</h3>
