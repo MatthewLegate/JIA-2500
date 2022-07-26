@@ -65,8 +65,6 @@ GetInLine is an application that has the primary purpose of creating a virtual q
   <li>Added the ability to leave an event’s queue as a user</li>
 </ul> 
 
-<br><hr><br>
-
 <h3>KNOWN BUGS</h3>
 <ul>
   <li>Google Firebase occasionally takes a while to load which can cause authentication to fail or certain data to not load when refreshed</li>
@@ -78,7 +76,7 @@ GetInLine is an application that has the primary purpose of creating a virtual q
 <h2>Install Guide</h2>
 <p>This section will aid in installing and running the software.</p>
 
-<h3>Pre-requisites:</h3>
+<h4>Pre-requisites:</h4>
 <p>
 4GB of RAM<br>
 10 GB free storage space<br>
