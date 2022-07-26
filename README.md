@@ -70,7 +70,6 @@ GetInLine is an application that has the primary purpose of creating a virtual q
   <li>Google Firebase occasionally takes a while to load which can cause authentication to fail or certain data to not load when refreshed</li>
   <li>Login does not always work</li>
 </ul>
-![image](https://user-images.githubusercontent.com/11431682/180930244-7acd3114-a0a4-4c53-843d-c0203f8ce8f3.png)
 
 
 <h2>Install Guide</h2>
@@ -82,4 +81,3 @@ GetInLine is an application that has the primary purpose of creating a virtual q
 10 GB free storage space<br>
 Internet Browser (Chrome, Firefox, Edge) *Note: Internet Explorer is NOT compatible<br> 
 </p>
-![image](https://user-images.githubusercontent.com/11431682/180930984-10d281e6-66db-4fc7-9b22-3a6837adbb6d.png)
