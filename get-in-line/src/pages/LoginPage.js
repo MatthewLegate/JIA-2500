@@ -23,16 +23,20 @@ function Login() {
       return;
     }
     if (user)  {
-      if (user.admin) {
         navigate("/admin");
-      } 
-    }
+      }
   }, [user, loading]);
   return (
+
+
+
 
     <div className="login">
 
       <div className="login__container">
+        <div className="title">
+        Get In Line
+        </div>
         <input
           type="text"
           className="login__textBox"
@@ -51,10 +55,10 @@ function Login() {
           className="login__btn"
           onClick={() => logInWithEmailAndPassword(email, password)}
         >
-          Login
+          <span>Login</span>
         </button>
-        <button className="login__btn login__google" onClick={signInWithGoogle}>
-          Login with Google
+        <button className="login__google" onClick={signInWithGoogle}>
+          <span>Google</span>
         </button>
         <div>
           <Link to="/reset">Forgot Password</Link>
@@ -64,6 +68,7 @@ function Login() {
         </div>
       </div>
     </div>
+
   );
 }
 export default Login;
