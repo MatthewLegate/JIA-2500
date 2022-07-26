@@ -7,7 +7,7 @@
 <p><font size="3">
 GetInLine is an application that has the primary purpose of creating a virtual queue system that incorporates artificial intelligence and geolocation features to allow users to increase their efficiency regarding queue times. Users will be able to queue into events both from the application and from a QR code. Administrators will possess the ability to create events and lines for other users to queue into.  </p>
 
-<table>
+<table align="center">
 <thead>
   <tr>
     <th>Name</th>
