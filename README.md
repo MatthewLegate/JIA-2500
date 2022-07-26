@@ -47,7 +47,7 @@ GetInLine is an application that has the primary purpose of creating a virtual q
 </table>
 
 
-<h2>Release Notes – v1.0.0</h2>
+<h1>Release Notes – v1.0.0</h1>
 
 <h3>NEW FEATURES</h3>
 <ul>
@@ -77,20 +77,130 @@ GetInLine is an application that has the primary purpose of creating a virtual q
 
 <br><hr><br>
 
-<h2>Install Guide</h2>
+<h1>Install Guide</h1>
 <p>This section will aid in installing and running the software.</p>
 
-<h4>Pre-requisites:</h4>
+<h2>Pre-requisites:</h2>
 <p>
 4GB of RAM<br>
 10 GB free storage space<br>
 Internet Browser (Chrome, Firefox, Edge) <em>*Note: Internet Explorer is NOT compatible</em><br> 
 </p>
 <br>
-<h4>Dependent libraries:</h4>
+<h2>Dependent libraries:</h2>
 <p>Install latest LTS version of node.js and npm<br>
   <b>Step 1:</b> Navigate to <a href="https://nodejs.org/en/download/">https://nodejs.org/en/download/</a><br>
   <b>Step 2:</b> Select either the Windows Installer or the macOS Installer depending on user’s system.<br>
   <b>Step 3:</b> Run the downloaded installer package and click Next<br>
+  <img src="/readmeImages/node01.png" width="300"> <br>
+  <b>Step 4:</b> Accept the license terms and click Next <br>
+  <img src="/readmeImages/node02.png" width="300"> <br>
+  <b>Step 5:</b> Click Next  <br>
+  <img src="/readmeImages/node03.png" width="300"> <br>
+  <b>Step 6:</b> Click Next  <br>
+  <img src="/readmeImages/node04.png" width="300"> <br>
+  <b>Step 7:</b> Click Install  <br>
+  <img src="/readmeImages/node05.png" width="300"> <br>
+  <b>Step 8:</b> Click Finish  <br>
+  <img src="/readmeImages/node06.png" width="300"> <br>
+  <b>Step 9:</b> <em>(Optional but recommended)</em> Open cmd or terminal if on Windows or Mac, respectively. Run the following statement in cmd/terminal  <br>
 </p>
-<img src"https://raw.githubusercontent.com/MatthewLegate/JIA-2500/main/readmeImages/node01.png">
+
+```
+node -v
+```
+
+There should be an output with some v16.x.x 
+
+Run the following statement in cmd/terminal 
+
+```
+node -v
+```
+
+There should be an output with some v8.x.x 
+
+<br>
+
+<h2>Download instructions:</h2>  
+<p>
+  <b>Step 1:</b> Navigate to <a href="https://github.com/MatthewLegate/JIA-2500">https://github.com/MatthewLegate/JIA-2500</a><br>
+  <b>Step 2:</b> Click on the green Code button to reveal the clone link<br>
+  <img src="/readmeImages/download01.png" width="600"> <br>
+  <b>Step 3:</b> Copy the github link<br>
+  <b>Step 4:</b> Open up cmd or terminal and navigate to a directory you would like to use to house the project files using this command <br>
+</p>
+  
+```
+cd PATH-TO-LOCATION
+```
+
+<p><b>Step 5:</b> Run the following command</p>
+
+```
+git clone COPIED-GITHUB-LINK
+```
+
+<p><b>Step 6:</b> Change directory to the project’s root directory JIA-2500/</p>
+
+```
+cd JIA-2500/
+```
+
+<p><b>Step 7:</b> Run the following command</p>
+
+```
+npm install
+```
+
+<p><b>Step 6:</b> Change directory to the get-in-line/ directory</p>
+
+```
+cd get-in-line/
+```
+
+<p><b>Step 7:</b> Run the following command</p>
+
+```
+npm install
+```
+
+
+
+<h2>Run Instructions </h2>
+<p><b>Step 1:</b> Open up cmd or terminal</p>
+
+<p><b>Step 2:</b> Change directory to the JIA-2500/get-in-line/ directory</p>
+
+```
+cd /JIA-2500/get-in-line/
+```
+
+<p><b>Step 3:</b> Run the following command</p>
+
+```
+npm start
+```
+
+A successful output will be: <br>
+<img src="/readmeImages/npmStart.png" width="600"> <br>
+
+<p><b>Step 4:</b> Open up a <b>NEW</b> cmd or terminal</p>
+<p><b>Step 5:</b> Change directory to the JIA-2500/get-in-line/server/ directory</p>
+
+```
+cd /JIA-2500/get-in-line/server
+```
+
+<p><b>Step 6:</b> Run the following command</p>
+
+```
+node index.js
+```
+
+A successful output will be:
+
+```
+Running on Port 4000
+```
+
