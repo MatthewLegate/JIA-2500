@@ -158,7 +158,7 @@ export default function EventDisplayPage() {
           addUser(Event, Name, Email);
         }
     }
-
+    
 	async function addUser(Event, UserName, UserEmail) {
         //Initialize event document
         const path = 'event/' + Event;
@@ -193,56 +193,55 @@ export default function EventDisplayPage() {
         alert("Adding " + UserName + " to " + Event);
     }
 
-    function calculateAverageWait(event) {
-      const event = doc(db, 'event', Event);
-      let dequeueTimes = []
+  async function calculateAverageWait(event) {
+    let dequeueTimes = []
   
   
-      const queuesQuery = query(
-        collection(db, 'event'),
-        limit(100) // Just to make sure we're not querying more than 100 events. Can be removed if database grows and is needed
-      );
+    const queuesQuery = query(
+      collection(db, 'event'),
+      limit(100) // Just to make sure we're not querying more than 100 events. Can be removed if database grows and is needed
+    );
   
-      const querySnapshot = await getDocs(queuesQuery);
+    const querySnapshot = await getDocs(queuesQuery);
   
   
-      querySnapshot.forEach((snap) => {
-        if (snap.data().name == Event) {
+    querySnapshot.forEach((snap) => {
+      if (snap.data().name == Event) {
           dequeueTimes = snap.data().dequeueTimes;
         }
-      });
+    });
   
       //need at least two times in order to be able to calculate average wait
-      if (dequeueTimes.length < 2) {
-        return NaN
-      }
-  
-      let numPeople = 0
-      let accumulatedTime = 0
-      for (; numPeople + 1 < dequeueTimes.length; numPeople++) {
-        accumulatedTime += dequeueTimes[numPeople] - dequeueTimes[numPeople + 1]
-      }
-  
-      return accumulatedTime/numPeople
-  
+    if (dequeueTimes.length < 2) {
+      return NaN
     }
   
-    function getWaitFor(event, userName) {
-      const average = calculateAverageWait(event)
-      let queue = [];
+    let numPeople = 0
+    let accumulatedTime = 0
+    for (; numPeople + 1 < dequeueTimes.length; numPeople++) {
+      accumulatedTime += dequeueTimes[numPeople] - dequeueTimes[numPeople + 1]
+    }
   
-      const querySnapshot = await getDocs(queuesQuery);
-      querySnapshot.forEach((snap) => {
+    return accumulatedTime/numPeople
+  
+  }
+  /*
+  async function getWaitFor(event, userName) {
+    const average = calculateAverageWait(event)
+    let queue = [];
+  
+    const querySnapshot = await getDocs(queuesQuery);
+    querySnapshot.forEach((snap) => {
         if (snap.data().name == Event) {
           queue = snap.data().queue;
         }
-      });
+    });
   
-      let location = 0
-      for (; location < queue.length, location++) {
+    let location = 0
+    for (; location < queue.length; location++) {
         
-      }
     }
-  
+  }
+  */
 
 }
