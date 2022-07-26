@@ -64,6 +64,10 @@ GetInLine is an application that has the primary purpose of creating a virtual q
     <a href="https://github.com/MatthewLegate/JIA-2500#run-instructions">
       Run Instructions
     </a>
+    <span> | </span>
+    <a href="https://github.com/MatthewLegate/JIA-2500#troubleshooting">
+      Troubleshooting
+    </a>
   </h4>
 </div>
 
