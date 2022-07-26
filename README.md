@@ -1,5 +1,9 @@
+<head>
+  <base href="/JIA-2500/">
+</head>
+
 <h1 align="center">
-  <img src="https://s3.amazonaws.com/rebelbase-production-s3/user_uploads/projects/%7Bproject_id%7D/project-profile-logo-156edee0-83a1-3380-92ec-8dd9b00ef3d6.png?v=63708760069" alt="Getinline, Inc." width="200"></a>
+  <img src="https://s3.amazonaws.com/rebelbase-production-s3/user_uploads/projects/%7Bproject_id%7D/project-profile-logo-156edee0-83a1-3380-92ec-8dd9b00ef3d6.png?v=63708760069" alt="Getinline, Inc." width="200">
   <br>
   Getinline
 </h1>
@@ -64,7 +68,7 @@ GetInLine is an application that has the primary purpose of creating a virtual q
   <li>Added integration with Twilio to send an SMS to users after they get in line</li>
   <li>Added the ability to leave an event’s queue as a user</li>
 </ul> 
-
+<br>
 <h3>KNOWN BUGS</h3>
 <ul>
   <li>Google Firebase occasionally takes a while to load which can cause authentication to fail or certain data to not load when refreshed</li>
@@ -80,5 +84,13 @@ GetInLine is an application that has the primary purpose of creating a virtual q
 <p>
 4GB of RAM<br>
 10 GB free storage space<br>
-Internet Browser (Chrome, Firefox, Edge) *Note: Internet Explorer is NOT compatible<br> 
+Internet Browser (Chrome, Firefox, Edge) <em>*Note: Internet Explorer is NOT compatible</em><br> 
 </p>
+<br>
+<h4>Dependent libraries:</h4>
+<p>Install latest LTS version of node.js and npm<br>
+  <b>Step 1:</b> Navigate to <a href="https://nodejs.org/en/download/">https://nodejs.org/en/download/</a><br>
+  <b>Step 2:</b> Select either the Windows Installer or the macOS Installer depending on user’s system.<br>
+  <b>Step 3:</b> Run the downloaded installer package and click Next<br>
+</p>
+<img src"https://raw.githubusercontent.com/MatthewLegate/JIA-2500/main/readmeImages/node01.png">
