@@ -61,7 +61,7 @@ GetInLine is an application that has the primary purpose of creating a virtual q
       Download Instructions
     </a>
     <span> | </span>
-    <a href="https://github.com/MatthewLegate/JIA-2500#run-instructions-">
+    <a href="https://github.com/MatthewLegate/JIA-2500#run-instructions">
       Run Instructions
     </a>
   </h4>
@@ -188,7 +188,7 @@ npm install
 
 
 
-<h2>Run Instructions </h2>
+<h2>Run Instructions</h2>
 <p><b>Step 1:</b> Open up cmd or terminal</p>
 
 <p><b>Step 2:</b> Change directory to the JIA-2500/get-in-line/ directory</p>
@@ -225,3 +225,44 @@ A successful output will be:
 Running on Port 4000
 ```
 
+
+
+<h2>Troubleshooting</h2>
+<p><b>Error:</b></p>
+
+```node
+npm: command not found
+```
+
+<p><b>Solution:</b> Verify that node.js and npm have been installed correctly. Follow Step 9 in the <a href="https://github.com/MatthewLegate/JIA-2500#dependent-libraries"> Dependent Libraries </a> section. If output does not show version number, then uninstall node.js and npm and re-install.</p>
+
+<hr>
+
+<p><b>Error:</b></p>
+
+```node
+Error: Cannot find module 'NAME-OF-MODULE'
+```
+
+<p><b>Solution:</b> Run </p>
+
+```
+npm install
+```
+
+inside the JIA-2500/ and get-in-line/ directories.
+
+<hr>
+
+<p><b>Error:</b></p>
+
+```node
+npm ERR! Missing script: "start"
+```
+
+<p><b>Solution:</b> npm start can only be run inside the get-in-line/ directory. Verify that you are in the correct directory</p>
+
+<hr>
+
+<p><b>Error: 'Distance from you:' on the /user page is stuck on 'loading...'</b></p>
+<p><b>Solution:</b> User location must be acquired in order to calculate the distance to event. Click on 'Display My Coordinates' button and click 'Allow' when the browser asks for permission to share location.</p>
