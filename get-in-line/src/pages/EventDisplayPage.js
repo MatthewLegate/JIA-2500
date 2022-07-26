@@ -193,8 +193,7 @@ export default function EventDisplayPage() {
         alert("Adding " + UserName + " to " + Event);
     }
 
-    function calculateAverageWait(event) {
-      const event = doc(db, 'event', Event);
+    async function calculateAverageWait(event) {
       let dequeueTimes = []
   
   
@@ -227,7 +226,7 @@ export default function EventDisplayPage() {
   
     }
   
-    function getWaitFor(event, userName) {
+    async function getWaitFor(event, userName) {
       const average = calculateAverageWait(event)
       let queue = [];
   
@@ -238,10 +237,7 @@ export default function EventDisplayPage() {
         }
       });
   
-      let location = 0
-      for (; location < queue.length, location++) {
-        
-      }
+      let location = queue.indexOf(userName)
     }
   
 
