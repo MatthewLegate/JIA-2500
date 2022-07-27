@@ -37,6 +37,11 @@ const updateDistance = (responseUrl) => {
     });
 }
 
+const displayNumberOfPeopleInLine = (numberOfPeopleInLine) => {
+    document.getElementById('numberOfPeopleInLine').innerHTML = "Current number of people in line: " + numberOfPeopleInLine;
+
+}
+
 const encodeURI = (input) => {
     input = input.replaceAll(',', '');
     return input.replaceAll(' ', '%20');
@@ -49,5 +54,6 @@ const sanitizeLatitudeAndLongitudeString = (input) => {
 
 export{
     findUserCoordinates,
-    calculateDistance
+    calculateDistance,
+    displayNumberOfPeopleInLine
 };
