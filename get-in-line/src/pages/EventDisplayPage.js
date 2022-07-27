@@ -70,7 +70,7 @@ export default function EventDisplayPage() {
             <p></p>
             <h2>{eventName}</h2>
             <p id='distanceFromUser'>Distance from you: </p>
-            <p>Current number of people in line: </p>
+            <p id='numberOfPeopleInLine'>Current number of people in line: </p>
             <p>Estimated waiting time:</p>
             Name* <input type="text" id="Name"/> <br/>
             <p></p>
@@ -226,19 +226,19 @@ export default function EventDisplayPage() {
   
     }
   
-    async function getWaitFor(event, userName) {
-      const average = calculateAverageWait(event)
-      let queue = [];
+    // async function getWaitFor(event, userName) {
+    //   const average = calculateAverageWait(event)
+    //   let queue = [];
   
-      const querySnapshot = await getDocs(queuesQuery);
-      querySnapshot.forEach((snap) => {
-        if (snap.data().name == Event) {
-          queue = snap.data().queue;
-        }
-      });
+    //   const querySnapshot = await getDocs(queuesQuery);
+    //   querySnapshot.forEach((snap) => {
+    //     if (snap.data().name == Event) {
+    //       queue = snap.data().queue;
+    //     }
+    //   });
   
-      let location = queue.indexOf(userName)
-    }
+    //   let location = queue.indexOf(userName)
+    // }
   
 
 }

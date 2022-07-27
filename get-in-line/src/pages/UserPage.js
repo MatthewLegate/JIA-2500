@@ -7,7 +7,7 @@ import { collection, doc, getDocs, query, setDoc, limit, onSnapshot, deleteDoc, 
 import { async } from '@firebase/util';
 import EventDisplayPage from './EventDisplayPage';
 import {Outlet, useNavigate} from 'react-router-dom';
-import { calculateDistance, findUserCoordinates } from '../components/Location';
+import { calculateDistance, findUserCoordinates, displayNumberOfPeopleInLine } from '../components/Location';
 
 //import firebase from 'firebase/compat/app';
 
@@ -45,6 +45,7 @@ export default function User() {
     const handleChange = (selected) => {
         const selectedEvent = events.find((e) => e.name === selected.target.value);
         const eventLocation = selectedEvent.address;
+        const numberOfPeopleInLine = selectedEvent.numOfPeople;
         var userCoordinates = document.getElementById('coordinates').innerHTML;
 
         setValue(selected.target.value);
@@ -52,6 +53,7 @@ export default function User() {
 
         if (userCoordinates.length > 1) {
             calculateDistance(eventLocation, userCoordinates);
+            displayNumberOfPeopleInLine(numberOfPeopleInLine);
         }
     };
 
