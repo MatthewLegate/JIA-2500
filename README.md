@@ -98,6 +98,8 @@ GetInLine is an application that has the primary purpose of creating a virtual q
 <ul>
   <li>Google Firebase occasionally takes a while to load which can cause authentication to fail or certain data to not load when refreshed</li>
   <li>Login does not always work</li>
+  <li>Users can add themselves to an event's queue again by just logging out, logging back in, and getting in line again</li>
+  <li>Estimated waiting time does not populate with a time</li>
 </ul>
 
 <br><hr><br>
